@@ -16,21 +16,42 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
+        
+        applyStyle()
+        applyLayout()
+    }
+    
+    func applyStyle() {
+        imageView.contentMode = .scaleAspectFit
+    }
+    
+    func applyLayout() {
         applyStyleLabel(label)
         applyStyleImageView(imageView)
+        
         [label, imageView].forEach() { item in
             view.addSubview(item)
+            item.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        NSLayoutConstraint.activate([
+            imageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 270),
+            imageView.heightAnchor.constraint(equalToConstant: 270),
+            
+            label.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            label.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -70)
+            
+        ])
     }
     
     func applyStyleLabel(
         _ label: UILabel,
-        frame: CGRect = CGRect(x: 124, y: 156, width: 173, height: 48),
         text: String = "I Am Rich",
         font: UIFont? = UIFont(name: "Helvetica Neue", size: 40),
         textColor: UIColor = .white
     ){
-        label.frame = frame
         label.text = text
         label.font = font
         label.textColor = textColor
@@ -38,10 +59,9 @@ final class ViewController: UIViewController {
     
     func applyStyleImageView(
         _ imageView: UIImageView,
-        frame: CGRect = CGRect(x: 72, y: 313, width: 270, height: 270)
+        image: UIImage? = UIImage(named: "diamond")
     ){
-        imageView.frame = frame
+        imageView.image = image
     }
-    
 }
 
